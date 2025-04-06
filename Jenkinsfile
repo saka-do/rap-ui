@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ANGULAR_DIR = '.'
+        ANGULAR_DIR = './rap-angular'
         DIST_DIR = 'dist'
         SIT_SERVER = 'eubuntu@ec2-56-228-1-214.eu-north-1.compute.amazonaws.com'
         SIT_PATH = '/var/www/rap-frontend/'
