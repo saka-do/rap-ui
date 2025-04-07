@@ -44,7 +44,7 @@ pipeline {
                 echo "Deploying to SIT server..."
                 sh """
                     ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'
-                    scp -r ${env.DIST_DIR}/rap-frontend/* ${env.SIT_SERVER}:${env.SIT_PATH}
+                    scp -r ${env.DIST_DIR}/rap-angular/* ${env.SIT_SERVER}:${env.SIT_PATH}
                 """
             }
         }
