@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         ANGULAR_DIR = './rap-angular'
-        DIST_DIR = 'dist'
+        DIST_DIR = './rap-angular/dist/rap-angular'
         SIT_SERVER = 'ubuntu@ec2-51-20-69-200.eu-north-1.compute.amazonaws.com'
         SIT_PATH = '/var/www/rap-frontend/'
     }
@@ -47,6 +47,13 @@ pipeline {
                     scp -r ${env.DIST_DIR}/rap-angular/* ${env.SIT_SERVER}:${env.SIT_PATH}
                 """
             }
+        }
+    }
+
+     post {
+        always {
+            echo 'Cleaning up workspace...'
+            cleanWs()
         }
     }
 }
