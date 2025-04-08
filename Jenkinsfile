@@ -20,7 +20,7 @@ pipeline {
                 dir("${env.ANGULAR_DIR}") {
                     sh """rm -rf node_modules package-lock.json
                         npm cache clean --force
-                        npm ci"""
+                        npm install --verbose"""
                 }
             }
         }
