@@ -20,7 +20,7 @@ pipeline {
                 dir("${env.ANGULAR_DIR}") {
                     sh """rm -rf node_modules package-lock.json
                         npm cache clean --force
-                        npm install"""
+                        npm install --verbose"""
                 }
             }
         }
@@ -29,13 +29,8 @@ pipeline {
             steps {
                 dir("${env.ANGULAR_DIR}") {
                     sh 'ng build'
+                    input message: 'Deploy latest build to SIT?', ok: 'Deploy Now'
                 }
-            }
-        }
-
-        stage('Manual Deployment Approval') {
-            steps {
-                input message: 'Deploy latest build to SIT?', ok: 'Deploy Now'
             }
         }
 
