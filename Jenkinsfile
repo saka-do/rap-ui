@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        ANGULAR_DIR = './rap-angular'
         EC2_USER = "ubuntu"
         SIT_SERVER = "ubuntu@ec2-3-6-160-180.ap-south-1.compute.amazonaws.com"
         SIT_PATH = "/var/www/frontend"
@@ -16,10 +17,12 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat '''
-                    npm cache clean --force
-                    npm install
-                '''
+                dir("${env.ANGULAR_DIR}") {
+                    bat '''
+                        npm cache clean --force
+                        npm install
+                    '''
+                }
             }
         }
 
