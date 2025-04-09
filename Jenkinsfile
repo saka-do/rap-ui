@@ -18,10 +18,10 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir("${env.ANGULAR_DIR}") {
-                    bat '''
+                    bat """
                         npm cache clean --force
                         npm install
-                    '''
+                    """
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('Build Rap') {
             steps {
                  dir("${env.ANGULAR_DIR}") {
-                    bat 'ng build'
+                    bat 'npm run build'
                  }
             }
         }
