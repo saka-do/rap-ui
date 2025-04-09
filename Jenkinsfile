@@ -2,45 +2,43 @@ pipeline {
     agent any
 
     environment {
-        ANGULAR_DIR = './rap-angular'
-        DIST_DIR = './rap-angular/dist/rap-angular'
-        SIT_SERVER = 'ubuntu@ec2-51-20-69-200.eu-north-1.compute.amazonaws.com'
-        SIT_PATH = '/var/www/rap-frontend/'
+        EC2_USER = "ubuntu"
+        SIT_SERVER = "ubuntu@ec2-3-6-160-180.ap-south-1.compute.amazonaws.com"
+        SIT_PATH = "/var/www/frontend"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/saka-do/rap-ui.git', credentialsId: 'github-pat'
+                git branch: 'main', url: 'https://github.com/your-username/angular-frontend-repo.git', credentialsId: 'github-pat'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                dir("${env.ANGULAR_DIR}") {
-                    sh """rm -rf node_modules package-lock.json
-                        npm cache clean --force
-                        npm install --verbose"""
-                }
+                bat '''
+                    npm cache clean --force
+                    npm install
+                '''
             }
         }
 
-        stage('Build Angular App') {
+        stage('Build Rap') {
             steps {
-                dir("${env.ANGULAR_DIR}") {
-                    sh 'ng build'
-                    input message: 'Deploy latest build to SIT?', ok: 'Deploy Now'
-                }
+                bat 'npm run build'
             }
         }
 
-        stage('Deploy to SIT') {
+        stage('Deploy') {
             steps {
-                echo "Deploying to SIT server..."
-                sh """
-                    ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'
-                    scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}
-                """
+                script {
+                    input message: "Deploy to EC2?", ok: "Deploy Now"
+                    bat """
+                        ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'
+                        scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}
+                        scp -r dist/* ${EC2_USER}@${EC2_HOST}:${EC2_PATH}
+                    """
+                }
             }
         }
     }
