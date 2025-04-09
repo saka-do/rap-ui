@@ -28,7 +28,9 @@ pipeline {
 
         stage('Build Rap') {
             steps {
-                bat 'npm run build'
+                 dir("${env.ANGULAR_DIR}") {
+                    bat 'ng build'
+                 }
             }
         }
 
