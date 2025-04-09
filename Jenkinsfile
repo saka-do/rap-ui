@@ -5,7 +5,7 @@ pipeline {
         ANGULAR_DIR = './rap-angular'
         EC2_USER = "ubuntu"
         SIT_SERVER = "ubuntu@ec2-3-6-160-180.ap-south-1.compute.amazonaws.com"
-        SIT_PATH = "/var/www/rap-frontend"
+        SIT_PATH = "/var/www/rap-frontend/*"
     }
 
     stages {
@@ -37,7 +37,7 @@ pipeline {
                 script {
                     input message: "Deploy to EC2?", ok: "Deploy Now"
                     bat """
-                        ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'
+                        ssh ${env.SIT_SERVER} 'sudo rm -rvf ${env.SIT_PATH}*'
                         scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}
                     """
                 }
@@ -45,10 +45,10 @@ pipeline {
         }
     }
 
-    //  post {
-    //     always {
-    //         echo 'Cleaning up workspace...'
-    //         cleanWs()
-    //     }
-    // }
+     post {
+        always {
+            echo 'Cleaning up workspace...'
+            cleanWs()
+        }
+    }
 }
