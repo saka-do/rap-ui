@@ -36,10 +36,12 @@ pipeline {
             steps {
                 script {
                     input message: "Deploy to EC2?", ok: "Deploy Now"
+                    sshagent (credentials: ['rap-sit']) {
                     bat """
-                        ssh ${env.SIT_SERVER} 'sudo rm -rvf ${env.SIT_PATH}*'
+                        ssh -o StrictHostKeyChecking=no ${env.SIT_SERVER} "sudo rm -rf ${env.SIT_PATH}/*"
                         scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}
                     """
+                    }
                 }
             }
         }
