@@ -18,10 +18,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir("${env.ANGULAR_DIR}") {
-                    bat """
-                        npm cache clean --force
-                        npm install
-                    """
+                    bat 'npm cache clean --force'
+                    bat 'npm install'
                 }
             }
         }
