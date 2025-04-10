@@ -32,7 +32,7 @@ pipeline {
             steps {
                 // Build the Angular project for production
                 dir("${env.ANGULAR_DIR}") {
-                    sh 'ng build --prod' 
+                    sh 'ng build' 
                 }
             }
         }
