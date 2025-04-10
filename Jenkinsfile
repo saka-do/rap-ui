@@ -2,53 +2,57 @@ pipeline {
     agent any
 
     environment {
-        ANGULAR_DIR = './rap-angular'
-        EC2_USER = "ubuntu"
-        SIT_SERVER = "ubuntu@ec2-3-6-160-180.ap-south-1.compute.amazonaws.com"
-        SIT_PATH = "/var/www/rap-frontend/*"
+        ANGULAR_DIR = './rap-angular'                  // Path to your Angular project
+        DIST_DIR = './rap-angular/dist/rap-angular'    // Build directory
+        SIT_SERVER = 'ubuntu@3.7.248.86' // SIT Server address
+        SIT_PATH = '/var/www/rap-frontend/'            // Path where app will be deployed on SIT server
     }
 
     stages {
-        stage('Git Checkout') {
+        stage('Checkout') {
             steps {
+                // Checkout code from GitHub
                 git branch: 'main', url: 'https://github.com/saka-do/rap-ui.git', credentialsId: 'github-pat'
             }
         }
 
+
         stage('Install Dependencies') {
             steps {
+                // Install the dependencies for the Angular app
                 dir("${env.ANGULAR_DIR}") {
-                    bat 'npm cache clean --force'
-                    bat 'npm install'
+                    sh """rm -rf node_modules package-lock.json  // Remove old dependencies
+                        npm cache clean --force                 // Clean npm cache
+                        npm install"""                          // Install fresh dependencies
                 }
             }
         }
 
-        stage('Build Rap') {
+        stage('Build Angular App') {
             steps {
-                 dir("${env.ANGULAR_DIR}") {
-                    bat 'npm run build'
-                 }
+                // Build the Angular project for production
+                dir("${env.ANGULAR_DIR}") {
+                    sh 'ng build --prod'  // Run the Angular build command with the production configuration
+                }
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to SIT') {
             steps {
-                script {
-                    input message: "Deploy to EC2?", ok: "Deploy Now"
-                    sshagent (credentials: ['rap-sit']) {
-                    bat """
-                        ssh -o StrictHostKeyChecking=no ${env.SIT_SERVER} "sudo rm -rf ${env.SIT_PATH}/*"
-                        scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}
-                    """
-                    }
-                }
+                input message: 'Deploy the latest build to SIT?', ok: 'Deploy Now'
+                echo "Deploying to SIT server..."
+                // Clean the SIT server's deploy directory
+                sh """
+                    ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'   // Remove old files
+                    scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}  // Copy the new build to the SIT server
+                """
             }
         }
     }
 
-     post {
+    post {
         always {
+            // Clean up the workspace after each build
             echo 'Cleaning up workspace...'
             cleanWs()
         }
