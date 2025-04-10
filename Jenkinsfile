@@ -21,9 +21,9 @@ pipeline {
             steps {
                 // Install the dependencies for the Angular app
                 dir("${env.ANGULAR_DIR}") {
-                    sh """rm -rf node_modules package-lock.json  // Remove old dependencies
-                        npm cache clean --force                 // Clean npm cache
-                        npm install"""                          // Install fresh dependencies
+                    sh """rm -rf node_modules package-lock.json
+                        npm cache clean --force                 
+                        npm install"""                       
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 // Build the Angular project for production
                 dir("${env.ANGULAR_DIR}") {
-                    sh 'ng build --prod'  // Run the Angular build command with the production configuration
+                    sh 'ng build --prod' 
                 }
             }
         }
