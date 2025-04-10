@@ -43,8 +43,8 @@ pipeline {
                 echo "Deploying to SIT server..."
                 // Clean the SIT server's deploy directory
                 sh """
-                    ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'   // Remove old files
-                    scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}  // Copy the new build to the SIT server
+                    ssh ${env.SIT_SERVER} 'rm -rf ${env.SIT_PATH}*'
+                    scp -r ${env.DIST_DIR}/* ${env.SIT_SERVER}:${env.SIT_PATH}
                 """
             }
         }
