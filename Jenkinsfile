@@ -19,6 +19,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                // clear previos cache and build
                 // Install the dependencies for the Angular app
                 dir("${env.ANGULAR_DIR}") {
                     sh """rm -rf node_modules package-lock.json
