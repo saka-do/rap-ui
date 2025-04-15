@@ -1,0 +1,7 @@
+{
+  "/ps": {
+    "target": "http://localhost:8500",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

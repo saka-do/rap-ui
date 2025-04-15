@@ -70,7 +70,8 @@
               "buildTarget": "rap-angular:build:production"
             },
             "development": {
-              "buildTarget": "rap-angular:build:development"
+              "buildTarget": "rap-angular:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
