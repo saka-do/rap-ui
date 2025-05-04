@@ -1,39 +1,60 @@
-<div class="container-fluid py-4">
-    <h2> Property List</h2>
-    <div class="table-responsive shadow rounded border">
-        @if (properties?.length > 0){
-            <table class="table table-hover table-bordered align-middle mb-0">
-                <thead class="table-light text-center">
-                    <tr>
-                        <th scope="col"> Image </th>
-                        <th scope="col"> Property Name </th>
-                        <th scope="col"> Location </th>
-                        <th scope="col"> Price </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for(property of properties; track property.id; let i = $index){
-                        <tr>
-                            <td>
-
-                            </td>
-                            <td>
-                                {{property.name}}
-                            </td>
-                            <td>
-                                {{property.address}}
-                            </td>
-                            <td>
-                                {{property.price}}
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        } @else{
-            <h6 class="text-danger text-center m-3">
-                No Properties available to display
-            </h6>
-        }
+<div class="container-fluid py-4 py-2">
+    <div class="row align-items-center gx-3 mb-2">
+        <h3 class="col-12 col-sm-3 col-md-4 col-lg-3 col-xl-2 mb-0 page-heading text-warning"> Property List </h3>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-5 col-xl-8">
+            <div class="input-group">
+                <input type="text" name="propertySearch" id="search-property" class="form-control">
+                <button class="btn btn-outline-secondary" onclick="performSearch()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-12 col-sm-3 col-md-4 col-lg-2 col-xl-2S mb-0 pe-3">
+            <button class="btn btn-success  w-75 w-sm-auto"> <i class="bi bi-plus-square me-1"></i> Property</button>
+        </div>
     </div>
-</div>
+    <div class="divider"></div>
+
+    <div class="mt-4">
+        @if (properties?.length > 0) {
+            <div class="row gy-4 justify-content-between">
+              @for (property of properties; track property.id) {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-3">
+                  <div class="card h-100 shadow-sm">
+                      <img 
+                          *ngIf="property.imageUrl else noImage" 
+                          [src]="property.imageUrl" 
+                          alt="Property Image" 
+                          class="card-img-top object-fit-cover" 
+                          style="height: 200px;"
+                      />
+                      <ng-template #noImage>
+                          <div class="bg-light d-flex justify-content-center align-items-center" style="height: 200px;">
+                              <span class="text-muted">No Image</span>
+                            </div>
+                      </ng-template>
+                      
+                  
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                          <h5 class="card-title text-truncate mb-0">{{ property.name || 'Unnamed' }}</h5>
+                          <p class="fw-semibold text-primary mb-0">${{ property.price || 'N/A' }}</p>
+                      </div>
+                      <p class="card-text text-muted mb-1">{{ property.address || 'Unknown Location' }}</p>
+                      <div class="d-flex justify-content-between align-items-center mt-3">
+                          <button class="btn btn-sm btn-warning"> Edit </button>
+                          <button class="btn btn-sm btn-danger"> Delete </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="alert alert-warning text-center mt-5">
+              No properties available to display.
+            </div>
+          }
+    </div>
+  </div>
+  
