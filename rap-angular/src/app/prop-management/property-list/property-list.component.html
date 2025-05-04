@@ -1,0 +1,39 @@
+<div class="container-fluid py-4">
+    <h2> Property List</h2>
+    <div class="table-responsive shadow rounded border">
+        @if (properties?.length > 0){
+            <table class="table table-hover table-bordered align-middle mb-0">
+                <thead class="table-light text-center">
+                    <tr>
+                        <th scope="col"> Image </th>
+                        <th scope="col"> Property Name </th>
+                        <th scope="col"> Location </th>
+                        <th scope="col"> Price </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(property of properties; track property.id; let i = $index){
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+                                {{property.name}}
+                            </td>
+                            <td>
+                                {{property.address}}
+                            </td>
+                            <td>
+                                {{property.price}}
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        } @else{
+            <h6 class="text-danger text-center m-3">
+                No Properties available to display
+            </h6>
+        }
+    </div>
+</div>
