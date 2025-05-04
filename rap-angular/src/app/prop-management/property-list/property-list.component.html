@@ -1,6 +1,9 @@
 <div class="container-fluid py-4 py-2">
-    <div class="row align-items-center gx-3 mb-2">
-        <h3 class="col-12 col-sm-3 col-md-4 col-lg-3 col-xl-2 mb-0 page-heading text-warning"> Property List </h3>
+    <!-- <div class="row align-items-center gx-3 mb-2">
+        <div class="col-12 col-sm-3 col-md-4 col-lg-3 col-xl-2 mb-0 ms-auto">
+            <h4 class="page-heading"> Property List </h4>
+        </div>
+
         <div class="col-12 col-sm-6 col-md-4 col-lg-5 col-xl-8">
             <div class="input-group">
                 <input type="text" name="propertySearch" id="search-property" class="form-control">
@@ -10,16 +13,42 @@
             </div>
         </div>
         <div class="col-12 col-sm-3 col-md-4 col-lg-2 col-xl-2S mb-0 pe-3">
-            <button class="btn btn-success  w-75 w-sm-auto"> <i class="bi bi-plus-square me-1"></i> Property</button>
+            <button class="btn btn-success  w-50 px-0"> <i class="bi bi-plus-square me-1"></i> Property</button>
         </div>
-    </div>
-    <div class="divider"></div>
+    </div> -->
+    <div class="row justify-content-center align-items-center gx-3 mb-4 text-center">
+  
+        <!-- Property List Heading -->
+        <div class="col-auto">
+          <h4 class="page-heading mb-0 text-danger"> Properties Dashboard</h4>
+        </div>
+      
+        <!-- Search Bar (Moderate Width) -->
+        <div class="col-auto">
+          <div class="input-group">
+            <input type="text" name="propertySearch" id="search-property" class="form-control" style="width: 250px;">
+            <button class="btn btn-outline-danger" onclick="performSearch()">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+      
+        <!-- Add Property Button -->
+        <div class="col-auto">
+          <button class="btn btn-warning">
+            <i class="bi bi-plus-square me-1"></i> Property
+          </button>
+        </div>
+      
+      </div>
+    
+    <!-- <div class="divider"></div> -->
 
     <div class="mt-4">
         @if (properties?.length > 0) {
             <div class="row gy-4 justify-content-between">
               @for (property of properties; track property.id) {
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                   <div class="card h-100 shadow-sm">
                       <img 
                           *ngIf="property.imageUrl else noImage" 
