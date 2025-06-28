@@ -23,9 +23,9 @@ pipeline {
                 
                 // Install the dependencies for the Angular app
                 dir("${env.ANGULAR_DIR}") {
-                    sh """rm -rf node_modules package-lock.json
-                        npm cache clean --force                 
-                        npm install"""                       
+                    sh """rm -rf node_modules
+                    npm cache clean --force
+                    npm ci"""                       
                 }
             }
         }
