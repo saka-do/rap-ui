@@ -4,7 +4,7 @@ pipeline {
     environment {
         ANGULAR_DIR = './rap-angular'                  // Path to your Angular project
         DIST_DIR = './rap-angular/dist/rap-angular/browser'    // Build directory
-        SIT_SERVER = 'ubuntu@13.233.100.95' // SIT Server address
+        SIT_SERVER = 'ubuntu@13.201.184.129' // SIT Server address
         SIT_PATH = '/var/www/rap-ui/'            // Path where app will be deployed on SIT server
     }
 
