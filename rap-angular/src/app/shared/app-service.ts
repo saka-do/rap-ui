@@ -6,14 +6,14 @@ import { Injectable } from "@angular/core";
 })
 export class AppService{
 
-    private testUrl:string = "/ps/test/hello"
+    private testUrl:string = "/ps/test/testdb"
 
     constructor(private httpClient: HttpClient){
 
     }
 
     getTestMessage(){
-        return this.httpClient.get(this.testUrl,{responseType: 'text'});
+        return this.httpClient.get(this.testUrl,{responseType: 'json'});
     }
 
 }

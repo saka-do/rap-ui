@@ -10,7 +10,7 @@ export class AppComponent implements OnInit{
 
   constructor(private appService: AppService){
     this.appService.getTestMessage().subscribe(res =>{
-      this.message = res;
+      console.log(res);
     })
   }
 
@@ -18,8 +18,6 @@ export class AppComponent implements OnInit{
     
   }
   title = 'rap-angular';
-
-  message: string = ""
 
 
 }
