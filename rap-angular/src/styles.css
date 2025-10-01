@@ -31,6 +31,6 @@
 }
 
 .form-control{
-    box-shadow: none !important;      /* Removes the outline/focus shadow */
+  box-shadow: none !important;      /* Removes the outline/focus shadow */
   border: 1px solid #ced4da !important;
 }
