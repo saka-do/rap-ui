@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyDetails } from '../../model/property-details';
 import { PropertyService } from '../../shared/property.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddPropertyComponent } from '../add-property/add-property.component';
 
 @Component({
   selector: 'app-property-list',
@@ -12,7 +14,7 @@ export class PropertyListComponent implements OnInit{
 
   public properties:Array<PropertyDetails> = [];
 
-  constructor(private propertyService: PropertyService) { }
+  constructor(private propertyService: PropertyService, private model: NgbModal) { }
 
   ngOnInit() {
     
@@ -24,6 +26,6 @@ export class PropertyListComponent implements OnInit{
   }
 
   addProperty(){
-    
+    this.model.open(AddPropertyComponent), {backdrop:'static'};
   }
 }

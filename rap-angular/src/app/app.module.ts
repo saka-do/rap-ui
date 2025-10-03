@@ -6,16 +6,20 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppService } from './shared/app-service';
 import { PropertyListComponent } from './prop-management/property-list/property-list.component';
+import { AddPropertyComponent } from './prop-management/add-property/add-property.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PropertyListComponent
+    PropertyListComponent,
+    AddPropertyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [AppService],
   bootstrap: [AppComponent]

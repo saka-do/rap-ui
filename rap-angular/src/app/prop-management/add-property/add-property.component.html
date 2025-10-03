@@ -1,0 +1,47 @@
+<!-- Button trigger modal -->
+<div class="modal-header">
+    <h4 class="modal-title"> Add New Property</h4>
+    <button type="button" class="btn btn-close" (click)="close()"></button>
+</div>
+<!-- Modal -->
+ <div class="modal-body">
+    <form [formGroup]="propertyForm" class="gy-2">
+        <div class="mb-3">
+            <label for="propertyName" class="form-label"><i class="bi-house-door me-1"></i> Name </label>
+            <input type="text" name="propertyName" id="pName" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"><i class="bi-card-text me-1"></i> Description </label>
+            <textarea type="text" name="description" id="pDescription" class="form-control"></textarea>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-12 col-md-6">
+                <label class="form-label"><i class="bi-cash-stack me-1"></i> Price per Night</label>
+                <input class="form-control" name="price" id="price"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label"><i class="bi-geo-alt me-1"></i> Location</label>
+                <input class="form-control" name="price" id="location"/>
+            </div>
+        </div>
+        <div class="mt-3" *ngIf="!previewUrl">
+            <label for="propertyImage" class="upload-dropzone text-center form-label d-block"><i class="bi-image me-1"></i> Image
+                <i class="bi-cloud-arrow-up fs-3 d-block mb-1"></i>
+                <small class="text-secondary">Click to upload or drag and drop</small>
+            </label>
+            <input id="propertyImage" type="file" class="visually-hidden" (change)="onImageSelected($event)" accept="image/*">
+        </div>
+        <div class="preview-box mt-2 position-relative" *ngIf="previewUrl">
+            <img [src]="previewUrl" alt="Selected Image Preview" class="img-fluid preview-img">
+            <button class="delete-btn position-absolute end-0 m-2 rounded-circle"
+              data-bs-toggle="tooltip" tooltip="Delete" (click)="clearImage()">
+            <i class="bi bi-x"></i>
+           </button>
+        </div>
+    </form>
+ </div>
+
+ <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="close()">Cancel</button>
+    <button class="btn btn-primary" (click)="save()">Save</button>
+ </div>
