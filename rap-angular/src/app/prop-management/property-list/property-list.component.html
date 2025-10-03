@@ -3,39 +3,46 @@
 
     <!-- Property List Heading -->
     <div class="col-auto">
-      <h4 class="page-heading mb-0 text-danger"> Properties Dashboard</h4>
+      <b class="page-heading mb-0"> Properties</b>
     </div>
 
-    <!-- Search Bar (Moderate Width) -->
+    
     <div class="col-md-4 col-lg-5 ">
+      <!-- Search Bar (Moderate Width) -->
       <div class="input-group">
-        <input type="text" name="propertySearch" id="search-property" class="form-control" style="width: 250px;">
-        <button class="btn btn-outline-danger" onclick="performSearch()">
+        <input type="text" name="propertySearch" id="search-property" class="form-control search-input" style="width: 250px;">
+        <button class="btn  btn-outline-primary" onclick="performSearch()">
           <i class="bi bi-search"></i>
         </button>
       </div>
+
     </div>
 
     <!-- Add Property Button -->
     <div class="col-auto">
-      <button class="btn btn-outline-success" title="Add property">
-        <i class="bi bi-plus-square me-1"></i>
+      <button class="btn add-btn btn-primary" title="Add property" (click)="addProperty()">
+        + Add Property
       </button>
     </div>
 
   </div>
-  <div class="divider"></div>
 
   <div class="mt-4">
     @if (properties?.length > 0) {
-    <div class="row justify-content-between">
-      @for (property of properties; track property.id) {
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
-        <div class="card h-100 shadow-sm">
-          <img *ngIf="property.imageUrl else noImage" [src]="property.imageUrl" alt="Property Image"
+    <div class="row g-3">
+      @for (property of properties; track property.propertyId) {
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2">
+        <div class="card h-100 shadow-sm position-relative">
+          <img *ngIf="property.thumbnailImage else noImage" [src]="property.thumbnailImage" alt="Property Image"
             class="card-img-top object-fit-cover" style="height: 200px;" />
+          
+          <!-- Delete Icon overlay on image-->
+           <button class="delete-btn position-absolute end-0 m-2 rounded-circle"
+              data-bs-toggle="tooltip" tooltip="Delete">
+            <i class="bi bi-x"></i>
+           </button>
           <ng-template #noImage>
-            <div class="bg-light d-flex justify-content-center align-items-center" style="height: 200px;">
+            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
               <span class="text-muted">No Image</span>
             </div>
           </ng-template>
@@ -45,7 +52,6 @@
             <div class="d-flex justify-content-between align-items-center">
               <h5 class="card-title text-truncate mb-0">{{ property.name || 'Unnamed' }}</h5>
               <p class="fw-semibold text-primary mb-0">${{ property.price || 'N/A' }}</p>
-              <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-trash"></i></button>
             </div>
           </div>
         </div>

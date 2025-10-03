@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Property } from '../../model/property';
+import { PropertyDetails } from '../../model/property-details';
+import { PropertyService } from '../../shared/property.service';
 
 @Component({
   selector: 'app-property-list',
@@ -9,18 +10,20 @@ import { Property } from '../../model/property';
 export class PropertyListComponent implements OnInit{
 
 
-  public properties:Array<any> = [];
+  public properties:Array<PropertyDetails> = [];
+
+  constructor(private propertyService: PropertyService) { }
 
   ngOnInit() {
-    // this.properties.push({name: 'Murugan Nelayam', description: 'FUlly furnished 2BHK FLat', price:2000, address:'Chennai', type: 'Flat'} as Property)
-    // this.properties.push({name: 'Murugan Nelayam', description: 'FUlly furnished 2BHK FLat', price:2000, address:'Chennai', type: 'Flat'} as Property)
-    // this.properties.push({name: 'Murugan Nelayam', description: 'FUlly furnished 2BHK FLat', price:2000, address:'Chennai', type: 'Flat'} as Property)
-    // this.properties.push({name: 'Murugan Nelayam', description: 'FUlly furnished 2BHK FLat', price:2000, address:'Chennai', type: 'Flat'} as Property)
-    // this.properties.push({name: 'Murugan Nelayam', description: 'FUlly furnished 2BHK FLat', price:2000, address:'Chennai', type: 'Flat'} as Property)
-
+    
+    this.propertyService.getAllProperties().subscribe(data => this.properties = data);
   }
 
   performSearch(){
+    
+  }
+
+  addProperty(){
     
   }
 }

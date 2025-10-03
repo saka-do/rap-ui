@@ -9,9 +9,9 @@ import { AppService } from './shared/app-service';
 export class AppComponent implements OnInit{
 
   constructor(private appService: AppService){
-    this.appService.getTestMessage().subscribe(res =>{
-      console.log(res);
-    })
+    // this.appService.getTestMessage().subscribe(res =>{
+    //   console.log(res);
+    // })
   }
 
   ngOnInit() {
