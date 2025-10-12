@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { PropertyService } from '../../shared/property.service';
+import { PropertyData } from '../../model/property-data';
+import { ToastrService } from 'ngx-toastr';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-add-property',
@@ -11,45 +15,44 @@ export class AddPropertyComponent {
 
   previewUrl:string | null;
   private objectUrl:string | null;
+  private imageData:File | null;
 
   propertyForm: FormGroup = new FormGroup({
-    propertyName : new FormControl('', Validators.required),
+    name : new FormControl('', Validators.required),
     description : new FormControl(''),
     price: new FormControl('', Validators.required),
     location: new FormControl(''),
-    image: new FormControl(null, Validators.required)
   });
 
-  constructor(private activeModel:NgbActiveModal){
+  constructor(private propertyService: PropertyService,
+            private activeModel:NgbActiveModal,
+            private toasterService: ToastrService){
 
   }
 
   onImageSelected(imgEvent:Event){
     console.log(imgEvent);
     const input = imgEvent.target as HTMLInputElement;
-    const file = input.files && input.files[0];
+    this.imageData = input.files && input.files[0];
     console.log(input);
-    console.log(file)
-    if(!file) return;
+    if(!this.imageData) return;
 
     //Guard only images;
-    if(!file.type.startsWith("image/")){
+    if(!this.imageData.type.startsWith("image/")){
       this.clearImage();
       return;
     }
-
-    //revoke previos previewUrl if any
-    const url = URL.createObjectURL(file);
+    const url = URL.createObjectURL(this.imageData);
     console.log(url);
-    this.objectUrl = url;
     this.previewUrl = url;
-
-    //Reset the input 
+    this.objectUrl = url;
+    console.log("Imge Size, ", this.imageData.size)
   }
 
   clearImage(){
-    this.objectUrl = null;
+    this.imageData = null;
     this.previewUrl = null;
+    this.objectUrl = null;
 
   }
   close(){
@@ -57,7 +60,27 @@ export class AddPropertyComponent {
   }
 
   save(){
+    console.log(this.propertyForm.value);
+    const propertyData:PropertyData = this.propertyForm.value;
+    propertyData.thumbnailImage = '';
+    propertyData.owner = "sathish";
 
+    const formData = new FormData();
+    formData.append('image', this.imageData);
+    formData.append('propertyData', new Blob([JSON.stringify(propertyData)], {type: 'application/json'}));
+    
+    console.log("Before semd payload: ",formData);
+
+    this.propertyService.addProperty(formData).subscribe(data =>{
+      console.log(data);
+      if(data != ""){
+        this.toasterService.success("Property saved successfully", '', {closeButton:true});
+        this.activeModel.close(data);
+      }else{
+        this.toasterService.error("Unable to Add Property Try again",'', {closeButton:true});
+      }
+      
+    });
   }
 
 
