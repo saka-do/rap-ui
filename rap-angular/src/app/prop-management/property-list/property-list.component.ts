@@ -43,7 +43,7 @@ export class PropertyListComponent implements OnInit{
   addProperty(){
     const modalRef: NgbModalRef = this.model.open(AddPropertyComponent, { backdrop: 'static' });
     modalRef.result.then(() =>{
-      
+      this.loadProperties();
     }).catch(msg => console.error(msg))
     .finally(()=> this.loadProperties)
   }
