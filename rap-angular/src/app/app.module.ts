@@ -9,12 +9,14 @@ import { PropertyListComponent } from './prop-management/property-list/property-
 import { AddPropertyComponent } from './prop-management/add-property/add-property.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { UpdatePropertyComponent } from './prop-management/update-property/update-property.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PropertyListComponent,
-    AddPropertyComponent
+    AddPropertyComponent,
+    UpdatePropertyComponent
   ],
   imports: [
     BrowserModule,

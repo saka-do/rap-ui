@@ -1,0 +1,112 @@
+<div class="container-fluid">
+    <div class="custom-container">
+        <h2 class="page-heading mb-0"> Change Property Details</h2>
+        <!--1.split screen in half-->
+        <div class="row split-container">
+            <!-- Left Side Property Details capture form-->
+            <div class="col-md-6 left-side">
+                <form [formGroup]="updatePropForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label class="form-label" for="propName"> Property Name </label>
+                        <input type="text" class="form-control" formControlName="name"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="propDescription"> Description </label>
+                        <textarea class="form-control" type="text" formControlName="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="propPrice" class="form-label"> Price Per Day</label>
+                        <input type="text" class="form-control" formControlName="price"/>
+                    </div>
+                    <div class="mb-3">
+                        @if(amenities?.length > 0){
+                            @for(amenity of amenities; track amenity.amenityId){
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" id="amenityId {{amenity.amenityId}}" type="checkbox" 
+                                        [checked]="updatePropForm.value.amenityIds?.includes(amenity.amenityId)"
+                                        (change)="onAmenityChange(amenity.amenityId, $event)">
+                                    <label class="form-check-label" for="amenityId {{amenity.amenityId}}"> {{amenity.amenity}} </label>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="mb-3" formGroupName="address">
+                        <h3 class="mb-1"> Address </h3>
+                        <div class="mb-3">
+                            <!--Dropdown to select state-->
+                            <label for="country" class="form-label"> Country </label>
+                            <input type="dropdown" class="form-control" formControlName="country">
+                        </div>
+                        <div class="mb-3">
+                            <!--Dropdown to select state-->
+                            <label for="state" class="form-label"> State </label>
+                            <input type="text" class="form-control" formControlName="state">
+                        </div>
+                        <div class="mb-3">
+                            <label for="line" class="form-label"> Address Line </label>
+                            <input type="text" class="form-control" formControlName="addressLine" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="city" class="form-label"> City </label>
+                            <input type="text" formControlName="city" class="form-control /">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pincode" class="form-label"> Postal Code </label>
+                            <input type="text" class="form-control" formControlName="pincode">
+                        </div>
+                    </div>
+                    <!-- <input type="submit" name="submit"/> -->
+                </form>
+                <div class="d-flex  justify-content-end px-2 gap-2">
+                    <button class="btn btn-secondary"> Reset </button>
+                    <button class="btn btn-primary" (click)="onSubmit()"> Save </button>
+                </div>
+            </div>
+            <!-- Right Side Image management-->
+            <div class="col-md-6 right-side">
+                <!--Image Player-->
+                <div class="d-flex align-items-center justify-content-center gap-3 m-3">
+                    <!-- Left Arrow -->
+                     <button class="btn btn-outline-primary px-2" [disabled]="isFirstImage" (click) = "scrollLeft()">
+                        <i class="bi bi-chevron-left"></i>
+                     </button>
+                     <!-- Image #No-->
+                    <div class="btn btn-primary fw-semi-bold px-3 rounded bg-primary border">
+                        <strong class="text-white m-0"> {{imgIndex + 1}} </strong>
+                    </div>
+                      <!-- Add Image Icon -->
+                    <button class="btn btn-outline-primary px-3" (click)="addImage()">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                     <!-- Right Arrow -->
+                    <button class="btn btn-outline-primary px-2" [disabled]="isLastImage" (click)="scrollRight()">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="d-block" id="ImagePreviewBlock">
+                    <div class="mt-3 p-4 m-4" *ngIf="!imageUrl">
+                    <label for="propertyImage" class="upload-dropzone text-center form-label d-block"><i class="bi-image me-1"></i> Image
+                        <i class="bi-cloud-arrow-up fs-3 d-block mb-1"></i>
+                        <small class="text-secondary">Click to upload or drag and drop</small>
+                    </label>
+
+                    <input id="propertyImage" type="file" class="visually-hidden" (change)="onImageSelected($event)" accept="image/*">
+                    </div>
+                    <div class="preview-box mt-2 position-relative" *ngIf="imageUrl">
+                        <img [src]="imageUrl" alt="Selected Image Preview" class="img-fluid preview-img">
+                        <button class="delete-btn position-absolute end-0 m-2 rounded-circle"
+                        data-bs-toggle="tooltip" tooltip="Delete" (click)="removeImage()">
+                        <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="d-flex  justify-content-end px-2 gap-2" *ngIf="objectUrl && saveImageBtn">
+                        <button class="btn btn-primary" (click) = "saveImage()"> Save Image</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

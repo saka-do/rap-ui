@@ -165,3 +165,27 @@ header{
     object-fit: contain;
     object-position: center;
 }
+
+.custom-container{
+    background-color: #fff;
+    border-radius: 0.6rem;
+    padding: 1rem 1.4rem;
+    margin: 1rem;
+}
+
+.left-side{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-side{
+    background-color: var(--neutral-light);
+    border-radius: 0.4rem;
+    max-height: 600px;
+}
+
+.split-container{
+    min-height: 400px;
+}

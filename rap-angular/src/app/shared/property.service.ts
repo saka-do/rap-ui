@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { PropertyData } from '../model/property-data';
+import { PropertyDetails } from '../model/property-details';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class PropertyService {
 
   private getAllPropertiesUrl:string = "/ps/api/properties";
   private addPropertyUrl:string = "/ps/api/properties";
-  private getPropertyByIdUrl:string ="/ps/api/properties/:id";
+  private propertyByIdUrl:string ="/ps/api/properties/property";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -31,5 +32,18 @@ export class PropertyService {
         return of("");
       })
     )
+  }
+
+  public getPropertyById(pId:number){
+    return this.httpClient.get<PropertyDetails>(`${this.propertyByIdUrl}/${pId}`).pipe(
+      catchError(error =>{
+        return of(null);
+      })
+      )
+  }
+
+  public updatePropertyDetails(propertyDetails:PropertyDetails){
+    console.log(propertyDetails)
+    return this.httpClient.put<PropertyDetails>(`${this.propertyByIdUrl}/${propertyDetails.propertyId}`,propertyDetails)
   }
 }

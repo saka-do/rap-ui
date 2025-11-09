@@ -5,6 +5,7 @@ import { AddPropertyComponent } from '../add-property/add-property.component';
 import { PropertyData } from '../../model/property-data';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageServiceService } from '../../shared/image-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property-list',
@@ -18,6 +19,7 @@ export class PropertyListComponent implements OnInit{
 
   constructor(private propertyService: PropertyService, 
               private imageService: ImageServiceService,
+              private router:Router,
               private model: NgbModal) { }
 
   ngOnInit() {
@@ -30,7 +32,10 @@ export class PropertyListComponent implements OnInit{
 
       this.properties.forEach((property:PropertyData) => {
         if(property.imageIds.length !=0 ){
-          this.imageService.getPropertyImageUrlByImgId(property.imageIds.at(0)).subscribe(imgUrl => property.thumbnailImage = imgUrl)
+          this.imageService.getPropertyImageUrlByImgId(property.propertyId,property.imageIds.at(0)).subscribe(imgUrl => {
+            property.thumbnailImage = imgUrl
+          console.log("Reveied,",imgUrl)}
+          )
         }
       })
     });
@@ -46,6 +51,10 @@ export class PropertyListComponent implements OnInit{
       this.loadProperties();
     }).catch(msg => console.error(msg))
     .finally(()=> this.loadProperties)
+  }
+
+  openProperty(propertyId){
+    this.router.navigate(['properties/update-property/',propertyId]);
   }
  
 }
