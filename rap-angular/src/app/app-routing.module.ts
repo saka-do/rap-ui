@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PropertyListComponent } from './prop-management/property-list/property-list.component';
 import { UpdatePropertyComponent } from './prop-management/update-property/update-property.component';
+import { ViewPropertyComponent } from './prop-management/view-property/view-property.component';
 
 const routes: Routes = [
   { path: '', component: PropertyListComponent},
   { path: 'properties', 
     children: [ 
       {path:'', component: PropertyListComponent},
-      {path:'update-property/:id', component: UpdatePropertyComponent}
+      {path:'update-property/:id', component: UpdatePropertyComponent},
+      {path:'view-property/:id', component:ViewPropertyComponent}
     ]
   }
 ];

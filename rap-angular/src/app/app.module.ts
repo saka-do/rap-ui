@@ -10,13 +10,16 @@ import { AddPropertyComponent } from './prop-management/add-property/add-propert
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { UpdatePropertyComponent } from './prop-management/update-property/update-property.component';
+import { ViewPropertyComponent } from './prop-management/view-property/view-property.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     PropertyListComponent,
     AddPropertyComponent,
-    UpdatePropertyComponent
+    UpdatePropertyComponent,
+    ViewPropertyComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { UpdatePropertyComponent } from './prop-management/update-property/updat
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
+    ToastrModule.forRoot(), NgbModule, // ToastrModule added
   ],
   providers: [AppService],
   bootstrap: [AppComponent]

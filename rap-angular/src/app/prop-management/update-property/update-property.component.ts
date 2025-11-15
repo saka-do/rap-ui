@@ -2,7 +2,7 @@ import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PropertyService } from '../../shared/property.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PropertyDetails } from '../../model/property-details';
 import { ImageServiceService } from '../../shared/image-service.service';
 import { ImageDto } from '../../model/image-dto';
@@ -52,7 +52,9 @@ export class UpdatePropertyComponent implements OnInit{
               private toasterService: ToastrService,
               private propertyService: PropertyService,
               private imageService: ImageServiceService,
-              private amenityService: AmenityService){
+              private amenityService: AmenityService,
+              private router: Router
+            ){
   }
 
   ngOnInit(): void {
@@ -247,5 +249,11 @@ export class UpdatePropertyComponent implements OnInit{
     });
   }
 
+
+
+
+  goBack(){
+    this.router.navigate(['/properties'])
+  }
 
 }

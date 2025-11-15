@@ -32,14 +32,20 @@
     <div class="row g-3">
       @for (property of properties; track property.propertyId) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2">
-        <div class="card h-100 shadow-sm position-relative" (click)="openProperty(property.propertyId)">
+        <div class="card h-100 shadow-sm position-relative">
           <img *ngIf="property.thumbnailImage else noImage" [src]="property.thumbnailImage" alt="Property Image"
-            class="card-img-top object-fit-cover" style="height: 200px;" />
+            class="card-img-top object-fit-cover" style="height: 200px;"  (click)="viewProperty(property.propertyId)"/>
           
           <!-- Delete Icon overlay on image-->
-           <button class="delete-btn position-absolute end-0 m-2 rounded-circle"
+           <button class="delete-btn position-absolute end-0 top-0 m-2 rounded-circle" (click)="deleteProperty(property.propertyId)"
               data-bs-toggle="tooltip" tooltip="Delete">
             <i class="bi bi-x"></i>
+           </button>
+
+            <!-- EDit Icon overlay on image, but below the delete icon-->
+           <button class="edit-btn position-absolute end-0 top-0 mt-5 m-2 rounded-circle" (click)="editProperty(property.propertyId)"
+              data-bs-toggle="tooltip" tooltip="Edit Property">
+            <i class="bi bi-pencil-square"></i>
            </button>
           <ng-template #noImage>
             <div class="d-flex justify-content-center align-items-center" style="height: 200px;">

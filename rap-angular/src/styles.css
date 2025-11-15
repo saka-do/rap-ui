@@ -104,11 +104,27 @@ header{
     cursor: pointer;
 }
 
+.edit-btn{
+    color: #5e5c5c;
+    border: none;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
 .delete-btn:hover{
     background-color: #ca7976;
     color: #0a0a0a;
 }
-.position-relative:hover .delete-btn{
+
+.edit-btn:hover{
+    background-color: #75aceb;
+    color: #0a0a0a;
+}
+
+.position-relative:hover .delete-btn,
+.position-relative:hover .edit-btn{
     opacity: 1;
 }
 .form-control{
@@ -188,4 +204,13 @@ header{
 
 .split-container{
     min-height: 400px;
+}
+
+
+/* Details Card Styling */
+.property-details-card {
+  background: var(--card-bg);
+  box-shadow: var(--shadow-subtle);
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  margin: 1rem 0;
 }

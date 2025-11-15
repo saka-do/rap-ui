@@ -1,0 +1,12 @@
+.carousal-container{
+    overflow: hidden;
+    height: 40vh;
+}
+
+.carousal-image{
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+  background: #f8f9fa;   /* Light BG helps with weirdly-sized images */
+  display: block;
+}

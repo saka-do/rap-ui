@@ -46,4 +46,8 @@ export class PropertyService {
     console.log(propertyDetails)
     return this.httpClient.put<PropertyDetails>(`${this.propertyByIdUrl}/${propertyDetails.propertyId}`,propertyDetails)
   }
+
+  public deleteProperty(pId:number){
+    return this.httpClient.delete(`${this.propertyByIdUrl}/${pId}`, {observe:'response'});
+  }
 }

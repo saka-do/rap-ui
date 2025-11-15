@@ -6,6 +6,7 @@ import { PropertyData } from '../../model/property-data';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageServiceService } from '../../shared/image-service.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-property-list',
@@ -20,7 +21,8 @@ export class PropertyListComponent implements OnInit{
   constructor(private propertyService: PropertyService, 
               private imageService: ImageServiceService,
               private router:Router,
-              private model: NgbModal) { }
+              private model: NgbModal,
+              private toasterService: ToastrService) { }
 
   ngOnInit() {
     this.loadProperties();
@@ -53,7 +55,31 @@ export class PropertyListComponent implements OnInit{
     .finally(()=> this.loadProperties)
   }
 
-  openProperty(propertyId){
+  viewProperty(propertyId){
+    this.router.navigate(['properties/view-property/',propertyId]);
+  }
+
+
+  deleteProperty(propertyId){
+    this.propertyService.deleteProperty(propertyId).subscribe({
+      next : response =>{
+        if(response.status == 200){
+          this.toasterService.warning("Property Deleted Sucessfullly",'',{closeButton:true});
+          this.loadProperties();
+        }
+        else{
+          this.toasterService.error("Error ocurred while performing operation",'',{closeButton:true})
+        }
+      },
+      error: error => {
+        console.error(error);
+      }
+      
+    });
+  }
+
+
+  editProperty(propertyId){
     this.router.navigate(['properties/update-property/',propertyId]);
   }
  
